@@ -1,7 +1,7 @@
 #include "fsl_device_registers.h"
 #include <stdio.h>
 
-void ADC0_Init() {
+/*void ADC0_Init() {
 	// Enable the clock the ADC0 module.
 	SIM_SCGC6 |= SIM_SCGC6_ADC0_MASK;
 
@@ -27,3 +27,4 @@ int mainlab4() {
 
     return 0;
 }
+*/

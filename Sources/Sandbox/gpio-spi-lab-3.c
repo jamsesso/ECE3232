@@ -7,7 +7,7 @@
 #include <stdio.h>
 static int i = 0;
 
-void delay(void) {
+/*void delay(void) {
 	int c = 1, d = 1;
 
 	for (c = 1; c <= 32767; c++)
@@ -15,18 +15,18 @@ void delay(void) {
 }
 
 void rgb_init(void) {
-	/* Turn on clock to PortB and PortdD module  */
+	//Turn on clock to PortB and PortdD module
 	// *0x40047000u |=  0x200u | 0x1000u
 	SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK | SIM_SCGC5_PORTD_MASK;
 
-	/* Set the PTA1, PTA2 pin multiplexer to GPIO mode ie alternative 1 */
+	//Set the PTA1, PTA2 pin multiplexer to GPIO mode ie alternative 1
 
 	PORTA_PCR1 = PORT_PCR_MUX(1);
 	PORTA_PCR2 = PORT_PCR_MUX(1);
 
-	/* Set the initial output state of bit 1 high all others to low */
+	// Set the initial output state of bit 1 high all others to low
 	GPIOA_PSOR |= 0x01;
-	/* Set the pin direction to output for PORTA1, PORTA2  */
+	// Set the pin direction to output for PORTA1, PORTA2
 	GPIOA_PDDR |= 6;
 
 }
