@@ -1,7 +1,5 @@
 #include "fsl_device_registers.h"
-
-#define SAMPLES 100
-#define THRESHOLD 15
+#include "gpio.h"
 
 void ADC0_Init() {
 	// Enable the clock the ADC0 module.
@@ -26,8 +24,18 @@ void delay(void) {
 		for (d = 1; d <= 16; d++) {}
 }
 
+void dac_write(unsigned char value) {
+	static short i = 0;
+
+	if(i == 0) {
+		gpio_init();
+	}
+
+	gpioc_write(value);
+}
+
 int main(void) {
-	int value = 0;
+	/*int value = 0;
 
 	ADC0_Init();
 
@@ -35,5 +43,7 @@ int main(void) {
 		value = ADC0_Convert();
 		printf("%d\n", value);
 		delay();
-	}
+	}*/
+
+	dac_write(16);
 }
