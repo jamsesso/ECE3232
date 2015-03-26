@@ -29,6 +29,7 @@ void dac_write(unsigned char value) {
 
 	if(i == 0) {
 		gpio_init();
+		i = 1;
 	}
 
 	gpioc_write(value);
