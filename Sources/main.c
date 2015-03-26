@@ -1,5 +1,6 @@
 #include "fsl_device_registers.h"
 #include "gpio.h"
+#include <stdbool.h>
 
 void ADC0_Init() {
 	// Enable the clock the ADC0 module.
@@ -21,30 +22,41 @@ void delay(void) {
 	int c = 1, d = 1;
 
 	for (c = 1; c <= 32767; c++)
-		for (d = 1; d <= 16; d++) {}
+		for (d = 1; d <= 1024; d++) {}
 }
 
 void dac_write(unsigned char value) {
-	static short i = 0;
+	static bool initialized = false;
 
-	if(i == 0) {
+	if(!initialized) {
 		gpio_init();
-		i = 1;
+		initialized = true;
 	}
 
 	gpioc_write(value);
 }
 
 int main(void) {
-	/*int value = 0;
-
-	ADC0_Init();
-
-	while(1) {
-		value = ADC0_Convert();
-		printf("%d\n", value);
-		delay();
+	/*while(1) {
+		for(int i = 0; i <= 8; i++) {
+			dac_write(i);
+			delay();
+		}
 	}*/
-
-	dac_write(16);
+	while(1) {
+		dac_write(0xff);
+		delay();
+		delay();
+		delay();
+		delay();
+		delay();
+		delay();
+		dac_write(0);
+		delay();
+		delay();
+		delay();
+		delay();
+		delay();
+		delay();
+	}
 }
