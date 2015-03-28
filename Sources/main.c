@@ -4,21 +4,38 @@
 #include "gpio.h"
 #include "dac.h"
 #include "adc.h"
-
-void delay(void) {
-	int c = 1, d = 1;
-
-	for (c = 1; c <= 32767; c++)
-		for (d = 1; d <= 128; d++) {}
-}
+#include "util.h"
+#include "detector.h"
 
 int main(void) {
+	int calibration = 0;
+	int threshold = 0;
 	adc_init();
+	dac_init();
+	dac_write(0);
 
-	while(1) {
-		printf("Read %i\n", adc_read());
-		delay();
-		delay();
-		delay();
+	calibration = detector_calibrate();
+	threshold = calibration + 10;
+
+	printf("Average light value = %i, threshold = %i\n", calibration, threshold);
+
+	while(true) {
+		if(detector_read(threshold)) {
+			dac_write(0);
+		}
+		else {
+			dac_write(0x7ff);
+		}
 	}
+
+	/*while(1) {
+		light = adc_read();
+
+		if(light > 145) {
+			printf("Detected light! %i\n", light);
+		}
+		else {
+			dac_write(0x4ff);
+		}
+	}*/
 }

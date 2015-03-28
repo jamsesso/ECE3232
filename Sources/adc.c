@@ -1,6 +1,9 @@
 #include <stdint.h>
 #include "fsl_device_registers.h"
 
+#ifndef ADC_MODULE_INCLUDED
+#define ADC_MODULE_INCLUDED 1
+
 void adc_init() {
 	// Enable the clock the ADC0 module.
 	SIM_SCGC6 |= SIM_SCGC6_ADC0_MASK;
@@ -15,3 +18,5 @@ uint8_t adc_read() {
 
 	return ADC0_RA;
 }
+
+#endif
