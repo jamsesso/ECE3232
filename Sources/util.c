@@ -1,11 +1,8 @@
-#ifndef UTIL_MODULE_INCLUDED
-#define UTIL_MODULE_INCLUDED 1
+void sleep(unsigned long ms) {
+	unsigned long long counter = 0;
+	unsigned long clock = 120000;
 
-void delay(void) {
-	int c = 1, d = 1;
-
-	for (c = 1; c <= 32767; c++)
-		for (d = 1; d <= 4096; d++) {}
+	for(counter = 0; counter < ms * clock; counter++) {
+		asm("");
+	}
 }
-
-#endif

@@ -1,9 +1,6 @@
 #include "fsl_device_registers.h"
 #include <stdint.h>
 
-#ifndef DAC_MODULE_INCLUDED
-#define DAC_MODULE_INCLUDED 1
-
 void dac_init() {
 	// Enable the clock to the DAC.
 	SIM_SCGC6 |= SIM_SCGC6_DAC0_MASK;
@@ -35,5 +32,3 @@ void dac_write(uint16_t value) {
 	// Enable the software trigger on the DAC.
 	DAC0_C0 |= DAC_C0_DACSWTRG_MASK;
 }
-
-#endif
