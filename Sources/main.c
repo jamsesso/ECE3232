@@ -1,41 +1,43 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "fsl_device_registers.h"
-#include "gpio.h"
-#include "dac.h"
+
 #include "adc.h"
-#include "util.h"
+#include "dac.h"
 #include "detector.h"
+#include "gpio.h"
+#include "idle.h"
+#include "led.h"
+#include "util.h"
 
 int main(void) {
 	int calibration = 0;
 	int threshold = 0;
+
 	adc_init();
 	dac_init();
+	gpio_c_init();
+	led_init();
+
 	dac_write(0);
 
 	calibration = detector_calibrate();
-	threshold = calibration + 10;
-
-	printf("Average light value = %i, threshold = %i\n", calibration, threshold);
+	threshold = calibration + 20;
 
 	while(true) {
-		if(detector_read(threshold)) {
+		if(is_idling()) {
 			dac_write(0);
+			led_write(false, false, false);
 		}
 		else {
-			dac_write(0x7ff);
+			if(detector_read(threshold)) {
+				led_write(true, true, true);
+				dac_write(0);
+			}
+			else {
+				led_write(false, false, false);
+				dac_write(0xFFF);
+			}
 		}
 	}
-
-	/*while(1) {
-		light = adc_read();
-
-		if(light > 145) {
-			printf("Detected light! %i\n", light);
-		}
-		else {
-			dac_write(0x4ff);
-		}
-	}*/
 }

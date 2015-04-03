@@ -7,7 +7,7 @@
 #include <stdio.h>
 static int i = 0;
 
-/*void delay(void) {
+void delay(void) {
 	int c = 1, d = 1;
 
 	for (c = 1; c <= 32767; c++)
