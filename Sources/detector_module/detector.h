@@ -6,6 +6,7 @@
 typedef struct detector_struct {
 	unsigned int threshold;
 
+	void (*calibrate) (struct detector_struct*);
 	bool (*is_over_threshold) (struct detector_struct*);
 } detector_t;
 
