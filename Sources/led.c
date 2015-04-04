@@ -1,7 +1,8 @@
-#include <stdbool.h>
+#include "led.h"
+
 #include "fsl_device_registers.h"
 
-void led_init() {
+void init_led_module() {
 	// Turn on clock to PortA and PortD module
 	SIM_SCGC5 |= SIM_SCGC5_PORTA_MASK | SIM_SCGC5_PORTD_MASK;
 
@@ -25,4 +26,12 @@ void led_write(bool red_on, bool green_on, bool blue_on) {
 
 	GPIOD_PSOR = ~0;
 	GPIOD_PCOR = blue_on << 5;
+}
+
+void led_on() {
+	led_write(true, true, true);
+}
+
+void led_off() {
+	led_write(false, false, false);
 }

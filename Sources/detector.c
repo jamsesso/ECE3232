@@ -1,9 +1,16 @@
-#include <stdbool.h>
+#include "detector.h"
+
+#include <stdlib.h>
 #include "adc.h"
 
 #define CALIBRATION_SAMPLE_SIZE 1000
+#define THRESHOLD_BUFFER 20
 
-int detector_calibrate() {
+void init_detector_module() {
+	adc_init();
+}
+
+detector_t* new_detector() {
 	int i = 0;
 	int calibration = 0;
 
@@ -11,9 +18,12 @@ int detector_calibrate() {
 		calibration += adc_read();
 	}
 
-	return calibration / CALIBRATION_SAMPLE_SIZE;
+	detector_t* detector = (detector_t*) malloc(sizeof(detector_t));
+	detector-> threshold = (calibration / CALIBRATION_SAMPLE_SIZE) + THRESHOLD_BUFFER;
+
+	return detector;
 }
 
-bool detector_read(int threshold) {
-	return adc_read() > threshold;
+bool is_over_threshold(detector_t* detector) {
+	return adc_read() > detector->threshold;
 }

@@ -1,42 +1,37 @@
-#include <stdbool.h>
-#include <stdint.h>
-#include "fsl_device_registers.h"
-
-#include "adc.h"
-#include "dac.h"
 #include "detector.h"
-#include "gpio.h"
+#include "driver.h"
 #include "idle.h"
 #include "led.h"
 #include "util.h"
 
+#define TRUE 1
+#define FALSE 0
+
+void board_init() {
+	init_detector_module();
+	init_driver_module();
+	init_idle_module();
+	init_led_module();
+}
+
 int main(void) {
-	int calibration = 0;
-	int threshold = 0;
+	board_init();
 
-	adc_init();
-	dac_init();
-	gpio_c_init();
-	led_init();
+	detector_t* detector = new_detector();
 
-	dac_write(0);
-
-	calibration = detector_calibrate();
-	threshold = calibration + 20;
-
-	while(true) {
+	while(TRUE) {
 		if(is_idling()) {
-			dac_write(0);
-			led_write(false, false, false);
+			stop_driving();
+			led_off();
 		}
 		else {
-			if(detector_read(threshold)) {
-				led_write(true, true, true);
-				dac_write(0);
+			if(detector->is_over_threshold(detector)) {
+				led_on();
+				stop_driving();
 			}
 			else {
-				led_write(false, false, false);
-				dac_write(0xFFF);
+				led_off();
+				start_driving();
 			}
 		}
 	}

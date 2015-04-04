@@ -1,5 +1,6 @@
+#include "dac.h"
+
 #include "fsl_device_registers.h"
-#include <stdint.h>
 
 void dac_init() {
 	// Enable the clock to the DAC.

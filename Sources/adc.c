@@ -1,4 +1,5 @@
-#include <stdint.h>
+#include "adc.h"
+
 #include "fsl_device_registers.h"
 
 void adc_init() {
