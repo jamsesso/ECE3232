@@ -26,7 +26,7 @@ void init_led_module() {
 }
 
 // Turns on the RGB LED with respect to the user's input
-void led_write(led_t* led, bool red_on, bool green_on, bool blue_on) {
+void led_write(led_t* self, bool red_on, bool green_on, bool blue_on) {
     GPIOA_PSOR = ~0;
     GPIOA_PCOR = (red_on << 1) | (green_on << 2);
 
@@ -35,29 +35,29 @@ void led_write(led_t* led, bool red_on, bool green_on, bool blue_on) {
 }
 
 // Makes the RGB LED white
-void led_on(led_t* led) {
-    led_write(led, true, true, true);
+void led_on(led_t* self) {
+    led_write(self, true, true, true);
 }
 
 // Turns the RGB LED off
-void led_off(led_t* led) {
-    led_write(led, false, false, false);
+void led_off(led_t* self) {
+    led_write(self, false, false, false);
 }
 
 /**
  * Creates and returns an led_module singleton
  */
 led_t* get_led() {
-    static led_t* led = 0;
+    static led_t* self = 0;
 
-    if(led == 0) {
+    if(self == 0) {
         init_led_module();
 
-        led = (led_t*) malloc(sizeof(led_t));
-        led->led_on = led_on;
-        led->led_off = led_off;
-        led->led_write = led_write;
+        self = (led_t*) malloc(sizeof(led_t));
+        self->led_on = &led_on;
+        self->led_off = &led_off;
+        self->led_write = &led_write;
     }
 
-    return led;
+    return self;
 }
