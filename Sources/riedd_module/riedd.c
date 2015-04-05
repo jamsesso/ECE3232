@@ -3,79 +3,87 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#ifdef BOARDLESS
+#include "boardless_simulation.h"
+#endif
 
-void transition_to_alert_mode(riedd_module_t* self) {
+
+void transition_to_alert_mode(riedd_module_t* riedd) {
     // Stop driving
-    self->driver->stop_driving(self->driver);
+    riedd->driver->stop_driving(riedd->driver);
 
     // Turn on LED
-    self->led->led_on(self->led);
+    riedd->led->led_on(riedd->led);
 
     // Make state transition
-    self->state = alert;
+    riedd->state = alert;
 }
 
-void transition_to_drive_mode(riedd_module_t* self) {
+void transition_to_drive_mode(riedd_module_t* riedd) {
     // Start driving
-    self->driver->start_driving(self->driver);
+    riedd->driver->start_driving(riedd->driver);
 
     // Turn off LED
-    self->led->led_off(self->led);
+    riedd->led->led_off(riedd->led);
 
     // Make state transition
-    self->state = drive;
+    riedd->state = drive;
 }
 
-void transition_to_idle_mode(riedd_module_t* self) {
+void transition_to_idle_mode(riedd_module_t* riedd) {
     // Stop driving
-    self->driver->stop_driving(self->driver);
+    riedd->driver->stop_driving(riedd->driver);
 
     // Turn off LED
-    self->led->led_off(self->led);
+    riedd->led->led_off(riedd->led);
 
     // Make state transition
-    self->state = idle;
+    riedd->state = idle;
 }
 
 /**
  * Controls the module based on the current state, and the readings from the sensors
  */
-void do_work(riedd_module_t* self) {
-    switch(self->state) {
+void do_work(riedd_module_t* riedd) {
+#ifdef BOARDLESS
+    handle_simulation_state();
+#endif
+
+    switch(riedd->state) {
 
     // We have detected an abnormal reading and are alerting the operator
     case alert:
         // Should we be idling?
-        if(self->idle->is_idling(self->idle)) {
-            transition_to_idle_mode(self);
+        if(riedd->idle->is_idling(riedd->idle)) {
+            transition_to_idle_mode(riedd);
         }
         // Are we still detecting an abnormal signal?
-        else if(!self->detector->is_over_threshold(self->detector)) {
-            transition_to_drive_mode(self);
+        else if(!riedd->detector->is_over_threshold(riedd->detector)) {
+            transition_to_drive_mode(riedd);
         }
         break;
 
     case drive:
         // Should we be idling?
-        if(self->idle->is_idling(self->idle)) {
-            transition_to_idle_mode(self);
+        if(riedd->idle->is_idling(riedd->idle)) {
+            transition_to_idle_mode(riedd);
         }
         // Have we detected an abnormal signal?
-        else if(self->detector->is_over_threshold(self->detector)) {
-            transition_to_alert_mode(self);
+        else if(riedd->detector->is_over_threshold(riedd->detector)) {
+            transition_to_alert_mode(riedd);
         }
         break;
 
     case idle:
         // Should we still be idling?
-        if(!self->idle->is_idling(self->idle)) {
+        if(!riedd->idle->is_idling(riedd->idle)) {
             // Re-calibrate the detector
-            self->detector->calibrate(self->detector);
-            transition_to_drive_mode(self);
+            riedd->detector->calibrate(riedd->detector);
+            transition_to_drive_mode(riedd);
         }
         break;
     default:
-        transition_to_idle_mode(self);
+        transition_to_idle_mode(riedd);
     }
 }
 
@@ -83,20 +91,20 @@ void do_work(riedd_module_t* self) {
  * Creates and returns a riedd_module singleton
  */
 riedd_module_t* get_riedd() {
-    static riedd_module_t* self = 0;
+    static riedd_module_t* riedd = 0;
 
-    if(self == 0) {
-        self = (riedd_module_t*) malloc(sizeof(riedd_module_t*));
+    if(riedd == 0) {
+        riedd = (riedd_module_t*) malloc(sizeof(riedd_module_t*));
 
-        self->detector = get_detector();
-        self->detector->calibrate(self->detector);
+        riedd->detector = get_detector();
+        riedd->detector->calibrate(riedd->detector);
 
-        self->driver = get_driver();
-        self->idle = get_idle();
-        self->led = get_led();
+        riedd->driver = get_driver();
+        riedd->idle = get_idle();
+        riedd->led = get_led();
 
-        self->do_work = do_work;
+        riedd->do_work = do_work;
     }
 
-    return self;
+    return riedd;
 }

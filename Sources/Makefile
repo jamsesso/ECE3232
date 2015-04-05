@@ -1,5 +1,5 @@
 release:
-	gcc -g -o main.out \
+	gcc -o main.out \
 		main.c \
 		riedd_module/riedd.c \
 		riedd_module/detector_module/adc.c \
@@ -11,9 +11,10 @@ release:
 		riedd_module/led_module/led.c
 
 debug:
-	gcc -g -o main.out \
+	gcc -g -w -DBOARDLESS -o main.out \
 		main.c \
 		riedd_module/riedd.c \
+		riedd_module/boardless_simulation.c \
 		riedd_module/detector_module/boardless_adc.c \
 		riedd_module/detector_module/detector.c \
 		riedd_module/driver_module/boardless_dac.c \

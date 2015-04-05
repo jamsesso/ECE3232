@@ -10,7 +10,7 @@ void init_idle_module() {
 /**
  * Checks the appropriate port to see if the module should be idling
  */
-bool is_idling(idle_t* self) {
+bool is_idling(idle_t* idle) {
     return gpio_c_read();
 }
 
@@ -18,13 +18,13 @@ bool is_idling(idle_t* self) {
  * Creates and returns an idle_module singleton
  */
 idle_t* get_idle() {
-    static idle_t* self = 0;
+    static idle_t* idle = 0;
 
-    if(self == 0) {
+    if(idle == 0) {
         init_idle_module();
-        self = (idle_t*) malloc(sizeof(idle_t));
-        self->is_idling = is_idling;
+        idle = (idle_t*) malloc(sizeof(idle_t));
+        idle->is_idling = is_idling;
     }
 
-    return self;
+    return idle;
 }

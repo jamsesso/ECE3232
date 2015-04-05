@@ -15,7 +15,7 @@ void init_detector_module() {
  * to create a baseline threshold which it will later use to determine
  * if the module has detected an abnormal reading
  */
-void calibrate(detector_t* self) {
+void calibrate(detector_t* detector) {
     int i = 0;
     int calibration = 0;
 
@@ -23,29 +23,29 @@ void calibrate(detector_t* self) {
         calibration += adc_read();
     }
 
-    self->threshold = (calibration / CALIBRATION_SAMPLE_SIZE) + THRESHOLD_BUFFER;
+    detector->threshold = (calibration / CALIBRATION_SAMPLE_SIZE) + THRESHOLD_BUFFER;
 }
 
 /**
  * Checks the current reading from the sensors against the calibrated threshold
  */
-bool is_over_threshold(detector_t* self) {
-    return adc_read() > self->threshold;
+bool is_over_threshold(detector_t* detector) {
+    return adc_read() > detector->threshold;
 }
 
 /**
  * Creates and returns a detector module singleton
  */
 detector_t* get_detector() {
-    static detector_t* self = 0;
+    static detector_t* detector = 0;
 
-    if(self == 0) {
+    if(detector == 0) {
         init_detector_module();
 
-        self = (detector_t*) malloc(sizeof(detector_t));
-        self->calibrate = calibrate;
-        self->is_over_threshold = is_over_threshold;
+        detector = (detector_t*) malloc(sizeof(detector_t));
+        detector->calibrate = calibrate;
+        detector->is_over_threshold = is_over_threshold;
     }
 
-    return self;
+    return detector;
 }
