@@ -20,6 +20,7 @@ typedef enum {
 } boardless_simulation_states;
 
 extern boardless_simulation_states sim_state;
+extern char slow_drive;
 void handle_simulation_state();
 
 #endif

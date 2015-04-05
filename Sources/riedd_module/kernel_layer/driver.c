@@ -1,9 +1,11 @@
 #include "driver.h"
 
 #include <stdlib.h>
-#include "dac.h"
+#include "hardware_abstraction_layer/dac.h"
+#include "hardware_abstraction_layer/gpio.h"
 
 void init_driver() {
+    gpio_xxx_init();
     dac_init();
 }
 
@@ -11,7 +13,12 @@ void init_driver() {
  * Starts driving the wheels at full power
  */
 void start_driving(driver_t* self) {
-    dac_write(0xFFF);
+    if(gpio_xxx_read()) {
+        dac_write(0xFFF);
+    }
+    else {
+        dac_write(0x7FF);
+    }
 }
 
 /**

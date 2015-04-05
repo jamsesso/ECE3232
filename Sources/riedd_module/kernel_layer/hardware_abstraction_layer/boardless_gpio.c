@@ -1,5 +1,5 @@
 #include "gpio.h"
-#include "../boardless_simulation.h"
+#include "../../boardless_simulation.h"
 
 void gpio_c_init() {}
 
@@ -19,3 +19,8 @@ int gpio_c_read() {
     return retVal;
 }
 
+void gpio_xxx_init(){}
+
+int gpio_xxx_read(){
+    return slow_drive ? 0 : 255;
+}
