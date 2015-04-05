@@ -15,6 +15,7 @@ debug:
 		main.c \
 		riedd_module/riedd.c \
 		riedd_module/boardless_simulation.c \
+		riedd_module/util.c \
 		riedd_module/detector_module/boardless_adc.c \
 		riedd_module/detector_module/detector.c \
 		riedd_module/driver_module/boardless_dac.c \

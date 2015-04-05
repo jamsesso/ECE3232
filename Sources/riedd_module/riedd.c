@@ -4,7 +4,24 @@
 
 #ifdef BOARDLESS
 #include <stdio.h>
+#include <termios.h>
+#include <unistd.h>
+
 #include "boardless_simulation.h"
+
+int mygetch ( void ) {
+    int ch;
+    struct termios oldt, newt;
+
+    tcgetattr ( STDIN_FILENO, &oldt );
+    newt = oldt;
+    newt.c_lflag &= ~( ICANON | ECHO );
+    tcsetattr ( STDIN_FILENO, TCSANOW, &newt );
+    ch = getchar();
+    tcsetattr ( STDIN_FILENO, TCSANOW, &oldt );
+
+    return ch;
+}
 #endif
 
 
@@ -46,7 +63,9 @@ void transition_to_idle_mode(riedd_module_t* self) {
  */
 void do_work(riedd_module_t* self) {
 #ifdef BOARDLESS
-    printf("\n\n");
+    // Wait for the user input before continuing
+    printf("\n\nAny key to continue\n");
+    mygetch();
     handle_simulation_state();
 #endif
 

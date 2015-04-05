@@ -14,6 +14,7 @@ void handle_simulation_state() {
         break;
 
     case anomaly_detected_b:
+        printf("in anomaly_removed_driving\n");
         sim_state = anomaly_removed_driving;
         break;
 
@@ -26,6 +27,7 @@ void handle_simulation_state() {
         break;
 
     case anomaly_removed_driving_b:
+        printf("in sim_idle_state\n");
         sim_state = sim_idle_state;
         break;
 
@@ -38,6 +40,7 @@ void handle_simulation_state() {
         break;
 
     case sim_idle_state_b:
+        printf("in post_sim_idle_state_driving\n");
         sim_state = post_sim_idle_state_driving;
         break;
 
@@ -50,10 +53,12 @@ void handle_simulation_state() {
         break;
 
     case post_sim_idle_state_driving_b:
+        printf("in anomaly_detected\n");
         sim_state = anomaly_detected;
         break;
 
     default:
+        printf("in sim_idle_state\n");
         sim_state = sim_idle_state;
     };
 }
