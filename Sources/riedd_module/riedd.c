@@ -46,17 +46,14 @@ void transition_to_idle_mode(riedd_module_t* self) {
  */
 void do_work(riedd_module_t* self) {
 #ifdef BOARDLESS
+    printf("\n\n");
     handle_simulation_state();
-    printf("done handling simulation state\n");
 #endif
 
     switch(self->state) {
 
     // We have detected an abnormal reading and are alerting the operator
     case alert:
-#ifdef BOARDLESS
-        printf("in alert state\n");
-#endif
         // Should we be idling?
         if(self->idle->is_idling(self->idle)) {
             transition_to_idle_mode(self);
@@ -68,9 +65,6 @@ void do_work(riedd_module_t* self) {
         break;
 
     case drive:
-#ifdef BOARDLESS
-        printf("in drive state\n");
-#endif
         // Should we be idling?
         if(self->idle->is_idling(self->idle)) {
             transition_to_idle_mode(self);
@@ -82,9 +76,6 @@ void do_work(riedd_module_t* self) {
         break;
 
     case idle:
-#ifdef BOARDLESS
-        printf("in idle state\n");
-#endif
         // Should we still be idling?
         if(!self->idle->is_idling(self->idle)) {
             // Re-calibrate the detector
@@ -94,9 +85,6 @@ void do_work(riedd_module_t* self) {
         break;
 
     default:
-#ifdef BOARDLESS
-        printf("in default\n");
-#endif
         transition_to_idle_mode(self);
     }
 }
