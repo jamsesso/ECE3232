@@ -4,10 +4,10 @@
 #include <stdbool.h>
 
 typedef struct idle_struct {
-	/**
-	 * Checks the appropriate port to see if the module should be idling
-	 */
-	bool (*is_idling) (struct idle_struct*);
+    /**
+     * Checks the appropriate port to see if the module should be idling
+     */
+    bool (*is_idling) (struct idle_struct*);
 } idle_t;
 
 /**

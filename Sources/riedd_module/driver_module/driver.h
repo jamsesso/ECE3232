@@ -2,15 +2,15 @@
 #define DRIVE_H
 
 typedef struct driver_struct {
-	/**
-	 * Starts driving the wheels at full power
-	 */
-	void (*start_driving) (struct driver_struct*);
+    /**
+     * Starts driving the wheels at full power
+     */
+    void (*start_driving) (struct driver_struct*);
 
-	/**
-	 * Stops driving the wheels
-	 */
-	void (*stop_driving) (struct driver_struct*);
+    /**
+     * Stops driving the wheels
+     */
+    void (*stop_driving) (struct driver_struct*);
 } driver_t;
 
 /**

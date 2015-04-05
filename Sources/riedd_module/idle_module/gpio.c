@@ -15,6 +15,6 @@ void gpio_c_init() {
 }
 
 int gpio_c_read() {
-	// Set the bits on the GPIO port to match value.
-	return GPIOC_PDIR;
+    // Set the bits on the GPIO port to match value.
+    return GPIOC_PDIR;
 }

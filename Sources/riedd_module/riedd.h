@@ -7,20 +7,20 @@
 #include "led_module/led.h"
 
 typedef enum {
-	alert,
-	drive,
-	idle
+    alert,
+    drive,
+    idle
 } riedd_states;
 
 typedef struct riedd_module_struct {
-	riedd_states state;
+    riedd_states state;
 
-	detector_t* detector;
-	driver_t* driver;
-	idle_t* idle;
-	led_t* led;
+    detector_t* detector;
+    driver_t* driver;
+    idle_t* idle;
+    led_t* led;
 
-	void (*do_work) (struct riedd_module_struct*);
+    void (*do_work) (struct riedd_module_struct*);
 } riedd_module_t;
 
 /**
