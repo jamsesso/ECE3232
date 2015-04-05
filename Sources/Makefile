@@ -11,7 +11,7 @@ release:
 		riedd_module/led_module/led.c
 
 debug:
-	gcc -g -w -DBOARDLESS -o main.out \
+	gcc -g -Wall -Werror -DBOARDLESS -o main.out \
 		main.c \
 		riedd_module/riedd.c \
 		riedd_module/boardless_simulation.c \
