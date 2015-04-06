@@ -1,6 +1,7 @@
 #include "riedd.h"
 
 #include <stdlib.h>
+#include "kernel_layer/driver_controller.h"
 
 #ifdef BOARDLESS
 #include <stdio.h>
@@ -122,7 +123,7 @@ riedd_module_t* get_riedd() {
         self->detector = get_detector();
         self->detector->calibrate(self->detector);
 
-        self->driver = get_driver();
+        self->driver = get_driver(get_driver_controller());
         self->idle = get_idle();
         self->led = get_led();
     }
