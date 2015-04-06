@@ -1,5 +1,5 @@
 #include "adc.h"
-#include "../../boardless_simulation.h"
+#include "boardless_simulation.h"
 
 // Empty because boardless does not need to initialize anything
 void adc_init() {}

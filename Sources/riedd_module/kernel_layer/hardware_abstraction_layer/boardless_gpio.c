@@ -1,5 +1,5 @@
 #include "gpio.h"
-#include "../../boardless_simulation.h"
+#include "boardless_simulation.h"
 
 void gpio_c_init() {}
 

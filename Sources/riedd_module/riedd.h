@@ -4,7 +4,7 @@
 #include "kernel_layer/detector.h"
 #include "kernel_layer/driver.h"
 #include "kernel_layer/idle.h"
-#include "kernel_layer/hardware_abstraction_layer/led.h"
+#include "kernel_layer/led.h"
 
 typedef enum {
     alert,

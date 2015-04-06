@@ -7,9 +7,9 @@
 #include <termios.h>
 #include <unistd.h>
 
-#include "boardless_simulation.h"
+#include "kernel_layer/hardware_abstraction_layer/boardless_simulation.h"
 
-int mygetch ( void ) {
+int mygetch () {
     int ch;
     struct termios oldt, newt;
 
