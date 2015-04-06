@@ -1,15 +1,19 @@
 #include "driver_controller.h"
 
+#include <stdbool.h>
 #include <stdlib.h>
 #include "hardware_abstraction_layer/gpio.h"
 
 void init_driver_controller() {
-    gpio_xxx_init();
+    gpio_c_init();
 }
 
 uint16_t get_drive_speed(driver_controller_t* self) {
     uint16_t drive_speed;
-    if(gpio_xxx_read()) {
+
+	// Read 7th least significant bit to check the speed switch
+    bool speed_switch_state = gpio_c_read() & (1 << 8);
+    if(speed_switch_state) {
         drive_speed = 0xFFF;
     }
     else {

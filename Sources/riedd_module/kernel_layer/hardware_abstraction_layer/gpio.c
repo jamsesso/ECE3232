@@ -1,36 +1,27 @@
 #include "gpio.h"
 
+#include <stdbool.h>
 #include "fsl_device_registers.h"
 
 
 void gpio_c_init() {
-  // Enable the clock to the GPIO module on port C.
-  SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK;
+	static bool is_initialized = false;
+	if(!is_initialized) {
+		is_initialized = true;
 
-  // Set the GPIO pins to alternative 1.
-  PORTC_PCR0 = PORT_PCR_MUX(1);
+		// Enable the clock to the GPIO module on port C.
+		SIM_SCGC5 |= SIM_SCGC5_PORTC_MASK;
 
-  // Set pins to input mode.
-  GPIOC_PDDR = 0x00;
+		// Set the GPIO pins to alternative 1.
+		PORTC_PCR0 = PORT_PCR_MUX(1);
+		PORTC_PCR7 = PORT_PCR_MUX(1);
+
+		// Set pins to input mode.
+		GPIOC_PDDR = 0x00;
+	}
 }
 
 int gpio_c_read() {
     // Set the bits on the GPIO port to match value.
     return GPIOC_PDIR;
-}
-
-void gpio_XXX_init() {
-  // Enable the clock to the GPIO module on port C.
-  SIM_SCGC5 |= SIM_SCGC5_PORTXXX_MASK;
-
-  // Set the GPIO pins to alternative 1.
-  PORTXXX_PCR0 = PORT_PCR_MUX(1);
-
-  // Set pins to input mode.
-  GPIOXXX_PDDR = 0x00;
-}
-
-int gpio_XXX_read() {
-    // Set the bits on the GPIO port to match value.
-    return GPIOXXX_PDIR;
 }

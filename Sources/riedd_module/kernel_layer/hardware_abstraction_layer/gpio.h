@@ -3,8 +3,4 @@
 
 void gpio_c_init();
 int gpio_c_read();
-
-void gpio_xxx_init();
-int gpio_xxx_read();
-
 #endif

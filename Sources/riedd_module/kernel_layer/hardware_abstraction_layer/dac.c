@@ -1,20 +1,26 @@
 #include "dac.h"
 
+#include <stdbool.h>
 #include "fsl_device_registers.h"
 
 void dac_init() {
-    // Enable the clock to the DAC.
-    SIM_SCGC6 |= SIM_SCGC6_DAC0_MASK;
+	static bool is_initialized = false;
+	if(!is_initialized) {
+		is_initialized = true;
 
-    DAC0_C0 = DAC_C0_DACRFS_MASK | DAC_C0_DACTRGSEL_MASK;
-    DAC0_C1 = 0;
+		// Enable the clock to the DAC.
+		SIM_SCGC6 |= SIM_SCGC6_DAC0_MASK;
 
-    // Make sure the DAC doesn't start high.
-    DAC0_DAT0L = 0;
-    DAC0_DAT0H = 0;
+		DAC0_C0 = DAC_C0_DACRFS_MASK | DAC_C0_DACTRGSEL_MASK;
+		DAC0_C1 = 0;
 
-    // Enable the DAC module.
-    DAC0_C0 |= DAC_C0_DACEN_MASK;
+		// Make sure the DAC doesn't start high.
+		DAC0_DAT0L = 0;
+		DAC0_DAT0H = 0;
+
+		// Enable the DAC module.
+		DAC0_C0 |= DAC_C0_DACEN_MASK;
+	}
 }
 
 /**

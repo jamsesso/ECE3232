@@ -11,7 +11,8 @@ void init_idle_module() {
  * Checks the appropriate port to see if the module should be idling
  */
 bool is_idling(idle_t* self) {
-    return gpio_c_read();
+	// Read least significant bit to check idle switch
+    return gpio_c_read() & 1;
 }
 
 /**
