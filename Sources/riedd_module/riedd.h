@@ -1,10 +1,10 @@
 #ifndef RIEDD_H_
 #define RIEDD_H_
 
-#include "detector_module/detector.h"
-#include "driver_module/driver.h"
-#include "idle_module/idle.h"
-#include "led_module/led.h"
+#include "kernel_layer/detector.h"
+#include "kernel_layer/driver.h"
+#include "kernel_layer/idle.h"
+#include "kernel_layer/led.h"
 
 typedef enum {
     alert,

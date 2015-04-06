@@ -1,7 +1,7 @@
 #include "idle.h"
 
 #include <stdlib.h>
-#include "gpio.h"
+#include "hardware_abstraction_layer/gpio.h"
 
 void init_idle_module() {
     gpio_c_init();

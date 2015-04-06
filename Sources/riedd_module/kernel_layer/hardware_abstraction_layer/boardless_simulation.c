@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 boardless_simulation_states sim_state = sim_idle_state;
+char slow_drive = 0;
 
 void handle_simulation_state() {
     switch(sim_state) {
@@ -45,6 +46,7 @@ void handle_simulation_state() {
         break;
 
     case post_sim_idle_state_driving:
+        slow_drive = !slow_drive;
         sim_state = post_sim_idle_state_driving_a;
         break;
 

@@ -1,7 +1,7 @@
 #include "detector.h"
 
 #include <stdlib.h>
-#include "adc.h"
+#include "hardware_abstraction_layer/adc.h"
 
 #define CALIBRATION_SAMPLE_SIZE 1000
 #define THRESHOLD_BUFFER 20

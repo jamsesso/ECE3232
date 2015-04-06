@@ -9,9 +9,6 @@ typedef struct led_struct {
 
     // Turns the RGB LED off
     void (*led_off) (struct led_struct*);
-
-    // Turns on the RGB LED with respect to the user's input
-    void (*led_write) (struct led_struct*, bool red_on, bool green_on, bool blue_on);
 } led_t;
 
 /**
