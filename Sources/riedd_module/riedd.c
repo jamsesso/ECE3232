@@ -8,7 +8,7 @@
 #include <termios.h>
 #include <unistd.h>
 
-#include "kernel_layer/hardware_abstraction_layer/boardless_simulation.h"
+#include "kernel_layer/hardware_abstraction_layer/include/boardless_simulation.h"
 
 int mygetch () {
     int ch;

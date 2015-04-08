@@ -2,7 +2,7 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
-#include "hardware_abstraction_layer/gpio.h"
+#include "gpio.h"
 
 void init_driver_controller() {
     gpio_c_init();

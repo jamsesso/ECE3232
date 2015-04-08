@@ -1,7 +1,7 @@
 #include "led.h"
 
 #include <stdlib.h>
-#include "hardware_abstraction_layer/rgb_led.h"
+#include "rgb_led.h"
 
 void init_led_module() {
 	init_rgb_led();

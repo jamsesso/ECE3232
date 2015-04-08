@@ -1,7 +1,7 @@
 #include "driver.h"
 
 #include <stdlib.h>
-#include "hardware_abstraction_layer/dac.h"
+#include "dac.h"
 
 void init_driver() {
     dac_init();
