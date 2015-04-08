@@ -12,7 +12,7 @@ uint16_t get_drive_speed(driver_controller_t* self) {
     uint16_t drive_speed;
 
 	// Read 7th least significant bit to check the speed switch
-    bool speed_switch_state = gpio_c_read() & (1 << 8);
+    bool speed_switch_state = gpio_c_read() & (1 << 7);
     if(speed_switch_state) {
         drive_speed = 0xFFF;
     }
