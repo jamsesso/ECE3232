@@ -4,7 +4,7 @@
 #include "hardware_abstraction_layer/adc.h"
 
 #define CALIBRATION_SAMPLE_SIZE 1000
-#define THRESHOLD_BUFFER 20
+#define THRESHOLD_BUFFER 25
 
 void init_detector_module() {
     adc_init();
@@ -23,14 +23,14 @@ void calibrate(detector_t* self) {
         calibration += adc_read();
     }
 
-    self->threshold = (calibration / CALIBRATION_SAMPLE_SIZE) + THRESHOLD_BUFFER;
+    self->_threshold = (calibration / CALIBRATION_SAMPLE_SIZE) + THRESHOLD_BUFFER;
 }
 
 /**
  * Checks the current reading from the sensors against the calibrated threshold
  */
 bool is_over_threshold(detector_t* self) {
-    return adc_read() > self->threshold;
+    return adc_read() > self->_threshold;
 }
 
 /**
@@ -43,7 +43,9 @@ detector_t* get_detector() {
         init_detector_module();
 
         self = (detector_t*) malloc(sizeof(detector_t));
-        self->threshold = 0;
+
+        self->_threshold = 0;
+
         self->calibrate = &calibrate;
         self->is_over_threshold = &is_over_threshold;
     }

@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 typedef struct detector_struct {
-    unsigned int threshold;
+    unsigned int _threshold;
 
     /**
      * Takes a sample of the environment using the onboard sensors in order
